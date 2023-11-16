@@ -1,4 +1,5 @@
-package BD;
+package App.BD;
 
 public class MongoDB {
+
 }
