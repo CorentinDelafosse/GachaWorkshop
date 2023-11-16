@@ -1,0 +1,33 @@
+<!-- FILEPATH: /c:/Users/coco7/Desktop/etude/3eme_Annee/ParagBD/GatchaWorkshop/src/main/resources/templates/recherche.html -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recherche de produit</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Recherche de produit</h1>
+        <form>
+            <label for="nom">Nom du produit:</label>
+            <input type="text" id="nom" name="nom">
+            <label for="categorie">Catégorie:</label>
+            <select id="categorie" name="categorie">
+                <option value="">--Choisir une catégorie--</option>
+                <option value="electronique">Électronique</option>
+                <option value="vetements">Vêtements</option>
+                <option value="alimentation">Alimentation</option>
+            </select>
+            <label for="prix_min">Prix minimum:</label>
+            <input type="number" id="prix_min" name="prix_min">
+            <label for="prix_max">Prix maximum:</label>
+            <input type="number" id="prix_max" name="prix_max">
+            <button type="submit">Rechercher</button>
+        </form>
+
+
+        <!--Si il y a des éléments à afficher pour la recherche (fournit par le controller)-->
+        <h2>Résultats de la recherche</h2>
+        
+    </body>
+</html>

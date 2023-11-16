@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.*;
 
 // Controller affichant la page d'ajout d'article FrontEnd/NewArticle.html
 @Controller 
-public class NewArticleController {
+public class RechercheController {
 
-    @GetMapping("/newArticle")
-    public String newArticle(Model model) {
-        return "newArticle";
+    @GetMapping("/recherche")
+    public String recherche(Model model) {
+        return "recherche";
     }
 
-    @PostMapping("/newArticle")
-    public String newArticleSubmit(@ModelAttribute NewArticleController article, Model model) {
-        model.addAttribute("article", article);
-        return "newArticle";
+    @PostMapping("/recherche")
+    public String rechercheSubmit(@ModelAttribute RechercheController recherche, Model model) {
+        model.addAttribute("recherche", recherche);
+        return "recherche";
     }
 
 }
