@@ -1,10 +1,10 @@
 package App.controllers;
 
 // Importez les classes nécessaires
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import App.BD.MongoDB;
 
 // Controller affichant la page d'ajout d'article FrontEnd/NewArticle.html
 @Controller 
@@ -16,8 +16,19 @@ public class NewArticleController {
     }
 
     @PostMapping("/newArticle")
-    public String newArticleSubmit(@ModelAttribute NewArticleController article, Model model) {
-        model.addAttribute("article", article);
+    public String newArticleSubmit(@RequestParam("nom") String nom,
+                                   @RequestParam("description") String description,
+                                   @RequestParam("prix") double prix,
+                                   Model model) {
+        // Ajoutez votre logique pour traiter les détails de l'article du formulaire
+        // Utilisez les valeurs de titre et contenu récupérées du formulaire
+        MongoDB.addProduct(nom, description, prix);
+
+        // Vous pouvez ajouter ces valeurs au modèle si nécessaire
+        model.addAttribute("nom", nom);
+        model.addAttribute("description", description);
+        model.addAttribute("prix", prix);
+
         return "newArticle";
     }
 

@@ -8,11 +8,13 @@
     </head>
     <body>
         <h1>Ajout d'un article</h1>
-        <form>
-            <label for="titre">Titre de l'article:</label>
-            <input type="text" id="titre" name="titre">
-            <label for="contenu">Contenu de l'article:</label>
-            <textarea id="contenu" name="contenu"></textarea>
+        <form action="/newArticle" method="post">
+            <label for="nom">Nom de l'article:</label>
+            <input type="text" id="nom" name="nom" required>
+            <label for="description">Description de l'article:</label>
+            <textarea id="description" name="description" required></textarea>
+            <label for=""prix>Prix de l'article</label>
+            <input type="float" id="prix" name="prix" required>
             <button type="submit">Enregistrer</button>
         </form>
     </body>
