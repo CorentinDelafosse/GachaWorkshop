@@ -1,5 +1,6 @@
 package App.controllers;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.bson.Document;
@@ -18,6 +19,16 @@ public class RechercheController {
     public String searchArticle(Model model) {
         // Implémentez la logique de recherche et récupérez la liste d'articles
         List<Document> articles = MongoDB.getAllArticles(); // Assurez-vous d'implémenter cette méthode dans votre classe MongoDB
+
+        //foreach articles pour changer prix en 2 décimal
+        for (Document article : articles) {
+            double prix = article.getDouble("prix");
+            
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            String resultatFormate = decimalFormat.format(prix);
+
+            article.put("prix", resultatFormate);
+        }
 
         // Ajoutez la liste d'articles au modèle
         model.addAttribute("articles", articles);
@@ -49,6 +60,16 @@ public class RechercheController {
 
         // Implémentez la logique de recherche et récupérez la liste d'articles filtrés
         List<Document> filteredArticles = MongoDB.rechercheArticle(rechercheTerm); // Assurez-vous d'implémenter cette méthode dans votre classe MongoDB
+
+        //foreach articles pour changer prix en 2 décimal
+        for (Document article : filteredArticles) {
+            double prix = article.getDouble("prix");
+            
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            String resultatFormate = decimalFormat.format(prix);
+
+            article.put("prix", resultatFormate);
+        }
 
         // Ajoutez la liste d'articles filtrés au modèle
         model.addAttribute("articles", filteredArticles);

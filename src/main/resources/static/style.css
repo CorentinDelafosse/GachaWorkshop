@@ -62,5 +62,11 @@ td {
 }
 
 .rechercheHome {
-    margin-right: 20px;
+    margin-right: 20px
+}
+
+.redirect {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
 }

@@ -20,8 +20,8 @@ public class NewArticleController {
                                    @RequestParam("description") String description,
                                    @RequestParam("prix") double prix,
                                    Model model) {
-        // Ajoutez votre logique pour traiter les détails de l'article du formulaire
-        // Utilisez les valeurs de titre et contenu récupérées du formulaire
+
+        // Ajouter l'article à la base de données
         MongoDB.addProduct(nom, description, prix);
 
         // Vous pouvez ajouter ces valeurs au modèle si nécessaire
