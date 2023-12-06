@@ -26,6 +26,14 @@
         <input type="float" id="prix" name="prix" required>
         <button type="submit">Enregistrer</button>
     </form>
+
+    <!-- Ajouter fichier csv pour ajout de plusieurs article -->
+    <form action="/newArticleCSV" method="post" enctype="multipart/form-data">
+        <label for="file">Ajouter un fichier CSV :</label>
+        <input type="file" id="file" name="file" accept=".csv">
+        <button type="submit">Enregistrer</button>
+    </form>
+
 </body>
 
 </html>
