@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #FFF;
 }
+
 form:not(.formRecherche) {
     background-color: #FFF;
     padding: 20px;
@@ -10,11 +11,13 @@ form:not(.formRecherche) {
     width: 50%;
     margin: 0 auto;
 }
+
 label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
 }
+
 input[type="text"],
 textarea {
     width: 100%;
@@ -24,6 +27,7 @@ textarea {
     margin-bottom: 20px;
     box-sizing: border-box;
 }
+
 button[type="submit"] {
     background-color: #4CAF50;
     color: white;
@@ -33,14 +37,30 @@ button[type="submit"] {
     cursor: pointer;
     font-size: 16px;
 }
+
 button[type="submit"]:hover {
     background-color: #3e8e41;
 }
 
+
 /*mettre une bordure au tableau et au cellule*/
-table, th, td {
+
+table,
+th,
+td {
     border: 1px solid black;
     border-collapse: collapse;
     /* mettre de l'espace entre les cellules */
     padding: 15px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.rechercheHome {
+    margin-right: 20px;
 }
