@@ -1,6 +1,6 @@
 package App.controllers;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -9,27 +9,19 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import App.BD.MongoDB;
+import App.BD.RedisFunctions;
 
 // Controller affichant la page d'ajout d'article FrontEnd/NewArticle.html
-@Controller 
+@Controller
 public class RechercheController {
 
     @GetMapping("/recherche")
     public String searchArticle(Model model) {
         // Implémentez la logique de recherche et récupérez la liste d'articles
-        List<Document> articles = MongoDB.getAllArticles(); // Assurez-vous d'implémenter cette méthode dans votre classe MongoDB
-
-        //foreach articles pour changer prix en 2 décimal
-        for (Document article : articles) {
-            double prix = article.getDouble("prix");
-            
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            String resultatFormate = decimalFormat.format(prix);
-
-            article.put("prix", resultatFormate);
-        }
-
+        List<Document> articles = MongoDB.getAllArticles(); // Assurez-vous d'implémenter cette méthode dans votre
+                                                            // classe MongoDB
         // Ajoutez la liste d'articles au modèle
         model.addAttribute("articles", articles);
 
@@ -49,30 +41,53 @@ public class RechercheController {
         return "redirect:/recherche";
     }
 
-
     @GetMapping("/rechercheArticle")
     public String rechercheArticle(@RequestParam(name = "rechercheTerm", required = false) String rechercheTerm,
-                                Model model) {
-        // Si aucun terme de recherche n'est spécifié, récupérez tous les articles
-        if (rechercheTerm == null || rechercheTerm.isEmpty()) {
+            Model model) {
+        List<String> result = RedisFunctions.getSearchResult(rechercheTerm);
+        if (result != null && !result.isEmpty()) {
+            List<Document> filteredArticles = new ArrayList<>();
+            int length = result.size(); // Récupérez la taille de la liste
+            // Parcourez les éléments par groupe de 4
+            for (int i = 0; i < length; i += 4) {
+                // Créez un nouveau document
+                Document document = new Document();
+
+                // Ajoutez les éléments au document avec les clés correspondantes
+                document.append("_id", result.get(i));
+                document.append("nom", result.get(i + 1));
+                document.append("description", result.get(i + 2));
+                document.append("prix", Double.parseDouble(result.get(i + 3)));
+
+                // Ajoutez le document à la liste
+                filteredArticles.add(document);
+            }
+
+            // Ajoutez la liste d'articles filtrés au modèle
+            model.addAttribute("articles", filteredArticles);
+
+            System.out
+                    .println("Résultat de la recherche dans Redis : " + RedisFunctions.getSearchResult(rechercheTerm));
+        }
+        // Si aucun terme de recherche n'est spécifié, récupère tous les articles
+        else if (rechercheTerm == null || rechercheTerm.isEmpty()) {
             return "redirect:/recherche";
+        } else {
+            // Implémentez la logique de recherche et récupérez la liste d'articles filtrés
+            List<Document> filteredArticles = MongoDB.rechercheArticle(rechercheTerm); // Assurez-vous d'implémenter
+                                                                                       // cette
+                                                                                       // méthode dans votre classe
+            for (Document article : filteredArticles) {
+                String nomValue = article.getString("nom");
+                String descriptionValue = article.getString("description");
+                String prixValue = article.getDouble("prix").toString();
+                String idValue = article.get("_id").toString();
+
+                RedisFunctions.saveSearchResult(rechercheTerm, nomValue, descriptionValue, prixValue, idValue);
+            }
+            // Ajoutez la liste d'articles filtrés au modèle
+            model.addAttribute("articles", filteredArticles);
         }
-
-        // Implémentez la logique de recherche et récupérez la liste d'articles filtrés
-        List<Document> filteredArticles = MongoDB.rechercheArticle(rechercheTerm); // Assurez-vous d'implémenter cette méthode dans votre classe MongoDB
-
-        //foreach articles pour changer prix en 2 décimal
-        for (Document article : filteredArticles) {
-            double prix = article.getDouble("prix");
-            
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            String resultatFormate = decimalFormat.format(prix);
-
-            article.put("prix", resultatFormate);
-        }
-
-        // Ajoutez la liste d'articles filtrés au modèle
-        model.addAttribute("articles", filteredArticles);
 
         return "recherche";
     }
