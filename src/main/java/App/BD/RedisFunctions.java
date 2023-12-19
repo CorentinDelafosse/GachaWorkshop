@@ -9,13 +9,14 @@ public class RedisFunctions {
 
     private static final JedisPool jedisPool = RedisConfig.initRedisConnectionPool();
 
-    public static void saveSearchResult(String result, String titre, String contenu, String prix, String id) {
+    public static void saveSearchResult(String result, String titre, String contenu, String prix, String id,
+            String image) {
         try (Jedis jedis = jedisPool.getResource()) {
             // Utilisez la clé "search:" suivie de l'identifiant comme préfixe
             String key = "search:" + result;
 
             // Ajoutez les informations de l'article à la liste dans Redis
-            jedis.rpush(key, id, titre, contenu, prix);
+            jedis.rpush(key, id, image, titre, contenu, prix);
 
             // Définissez une expiration (par exemple, 1 heure) si nécessaire
             jedis.expire(key, 3600);

@@ -22,9 +22,9 @@ public class RechercheController {
         // Implémentez la logique de recherche et récupérez la liste d'articles
         List<Document> articles = MongoDB.getAllArticles(); // Assurez-vous d'implémenter cette méthode dans votre
                                                             // classe MongoDB
-        // Ajoutez la liste d'articles au modèle
+                                                            // Ajoutez la liste d'articles au modèle
+        System.out.println("Liste des articles : " + articles);
         model.addAttribute("articles", articles);
-
         return "recherche";
     }
 
@@ -49,15 +49,16 @@ public class RechercheController {
             List<Document> filteredArticles = new ArrayList<>();
             int length = result.size(); // Récupérez la taille de la liste
             // Parcourez les éléments par groupe de 4
-            for (int i = 0; i < length; i += 4) {
+            for (int i = 0; i < length; i += 5) {
                 // Créez un nouveau document
                 Document document = new Document();
 
                 // Ajoutez les éléments au document avec les clés correspondantes
                 document.append("_id", result.get(i));
-                document.append("nom", result.get(i + 1));
-                document.append("description", result.get(i + 2));
-                document.append("prix", Double.parseDouble(result.get(i + 3)));
+                document.append("image", result.get(i + 1));
+                document.append("nom", result.get(i + 2));
+                document.append("description", result.get(i + 3));
+                document.append("prix", Double.parseDouble(result.get(i + 4)));
 
                 // Ajoutez le document à la liste
                 filteredArticles.add(document);
@@ -66,8 +67,6 @@ public class RechercheController {
             // Ajoutez la liste d'articles filtrés au modèle
             model.addAttribute("articles", filteredArticles);
 
-            System.out
-                    .println("Résultat de la recherche dans Redis : " + RedisFunctions.getSearchResult(rechercheTerm));
         }
         // Si aucun terme de recherche n'est spécifié, récupère tous les articles
         else if (rechercheTerm == null || rechercheTerm.isEmpty()) {
@@ -80,10 +79,11 @@ public class RechercheController {
             for (Document article : filteredArticles) {
                 String nomValue = article.getString("nom");
                 String descriptionValue = article.getString("description");
+                String image = article.getString("image");
                 String prixValue = article.getDouble("prix").toString();
                 String idValue = article.get("_id").toString();
 
-                RedisFunctions.saveSearchResult(rechercheTerm, nomValue, descriptionValue, prixValue, idValue);
+                RedisFunctions.saveSearchResult(rechercheTerm, nomValue, descriptionValue, prixValue, idValue, image);
             }
             // Ajoutez la liste d'articles filtrés au modèle
             model.addAttribute("articles", filteredArticles);

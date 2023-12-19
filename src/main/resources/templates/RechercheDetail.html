@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Détails de l'article</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+  </head>
+
+  <body>
+    <h1>Détails de l'article</h1>
+
+    <div>
+      <!-- Affichez les détails de l'article ici -->
+      <div>
+        <img
+          th:src="'data:image/png;base64,' + ${article.image}"
+          class="image-limit-height"
+          alt="Image de l'article"
+        />
+      </div>
+      <div>
+        <h2 th:text="${article.nom}"></h2>
+        <p th:text="${article.description}"></p>
+        <p th:text="'Prix: ' + ${article.prix}"></p>
+      </div>
+    </div>
+  </body>
+</html>

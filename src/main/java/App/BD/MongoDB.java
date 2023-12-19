@@ -9,15 +9,22 @@ import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.web.multipart.MultipartFile;
 
 public class MongoDB {
     private static final String URL = "mongodb://localhost:27017";
     private static final String DATABASE_NAME = "gachaWorkshop";
     private static final String COLLECTION_NAME = "Articles";
 
-    public static void addProduct(String nomProduit, String descriptionProduit, double prixProduit) {
+    public static void addProduct(String nomProduit, String descriptionProduit, double prixProduit,
+            MultipartFile imagePath) {
         // Connectez-vous à la base de données MongoDB
         try (MongoClient mongoClient = MongoClients.create(URL)) {
             // Sélectionnez la base de données
@@ -26,10 +33,15 @@ public class MongoDB {
             // Sélectionnez la collection
             MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
 
+            // Convertissez l'image en base64
+            String imageBase64 = encodeImageToBase64(imagePath.getBytes());
+
+            // Insérez le document avec l'image
             InsertOneResult result = collection.insertOne(new Document()
                     .append("nom", nomProduit)
                     .append("description", descriptionProduit)
-                    .append("prix", prixProduit));
+                    .append("prix", prixProduit)
+                    .append("image", imageBase64));
 
             // Affichez le résultat de l'opération d'insertion
             System.out.println("Résultat de l'opération d'insertion : " + result);
@@ -38,6 +50,11 @@ public class MongoDB {
         } catch (Exception e) {
             System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
         }
+    }
+
+    // fonction pour convertir l'image en base64
+    public static String encodeImageToBase64(byte[] imageBytes) {
+        return Base64.getEncoder().encodeToString(imageBytes);
     }
 
     // fonction pour la recherche d'article selon le nom ou le prix
@@ -131,6 +148,26 @@ public class MongoDB {
         }
 
         return Articles;
+    }
+
+    public static Document getArticleById(String articleId) {
+        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
+            // Sélectionnez la base de données
+            MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
+
+            // Sélectionnez la collection
+            MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
+
+            // Créez le filtre pour récupérer l'article par ID
+            Document query = new Document("_id", new ObjectId(articleId));
+
+            // Utilisez la méthode findOne pour récupérer un seul document
+            return collection.find(query).first();
+
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération de l'article par ID : " + e.getMessage());
+            return null; // Gérer l'erreur selon vos besoins
+        }
     }
 
 }

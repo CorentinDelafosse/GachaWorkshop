@@ -2,57 +2,65 @@
 
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Résultats de la recherche d'articles</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-</head>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+  </head>
 
-<body>
+  <body>
     <h1>Résultats de la recherche d'articles</h1>
 
     <!-- redirection vers newArticle -->
     <div class="redirect">
-        <a href="/newArticle">Ajouter un article</a>
+      <a href="/newArticle">Ajouter un article</a>
     </div>
 
     <!-- Formulaire de recherche -->
     <form action="/rechercheArticle" method="get">
-        <label for="rechercheTerm">Terme de recherche:</label>
-        <input type="text" id="rechercheTerm" name="rechercheTerm">
-        <button type="submit">Rechercher</button>
+      <label for="rechercheTerm">Terme de recherche:</label>
+      <input type="text" id="rechercheTerm" name="rechercheTerm" />
+      <button type="submit">Rechercher</button>
     </form>
 
-    <br>
+    <br />
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Supprimer</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Utilisez Thymeleaf pour parcourir la liste d'articles et les afficher -->
-            <tr th:each="article : ${articles}">
-                <td th:text="${article.nom}"></td>
-                <td th:text="${article.description}"></td>
-                <td th:text="${article.prix}"></td>
-                <td>
-                    <!-- Formulaire pour soumettre la demande de suppression -->
-                    <form action="/recherche" method="post" class="formRecherche">
-                        <input type="hidden" id="articleId" name="articleId" th:value="${article._id}">
-                        <button type="submit">
-                                <span class="material-symbols-outlined">delete_forever</span>
-                            </button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</body>
-
+    <div class="card-deck">
+      <!-- Utilize Thymeleaf to iterate over the list of articles and display them as cards -->
+      <div th:each="article : ${articles}" class="card">
+        <a th:href="@{'/articleDetails/' + ${article._id}}">
+          <div class="card-img">
+            <img
+              th:src="'data:image/png;base64,' + ${article.image}"
+              class="card-img-top image-limit-height"
+              alt="Image de l'article"
+            />
+          </div>
+          <div class="card-body">
+            <h5 class="card-title" th:text="${article.nom}"></h5>
+            <p class="card-text" th:text="${article.description}"></p>
+            <p class="card-text" th:text="'Prix: ' + ${article.prix}"></p>
+          </div>
+          <div class="card-footer">
+            <!-- Form to submit the delete request -->
+            <form action="/recherche" method="post" class="formRecherche">
+              <input
+                type="hidden"
+                id="articleId"
+                name="articleId"
+                th:value="${article._id}"
+              />
+              <button type="submit" class="btn btn-danger">
+                <span class="material-symbols-outlined">delete_forever</span>
+                Supprimer
+              </button>
+            </form>
+          </div>
+        </a>
+      </div>
+    </div>
+  </body>
 </html>

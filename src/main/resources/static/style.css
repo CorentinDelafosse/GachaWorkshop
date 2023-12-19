@@ -42,6 +42,88 @@ button[type="submit"]:hover {
     background-color: #3e8e41;
 }
 
+.card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Ajustez selon vos besoins */
+}
+
+.card {
+    width: 40vw;
+    margin-bottom: 16px;
+    border-radius: 8px;
+}
+
+.card-img {
+    max-height: 40vh;
+    /* Ajustez selon vos besoins */
+    overflow: hidden;
+    /* Assure que l'image ne dépasse pas la hauteur spécifiée */
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 90vw;
+    }
+    
+}
+.card-img img {
+    width: 100%;
+    height: auto;
+}
+
+.card-footer {
+    background-color: #6b747c;
+    border-top: 1px solid #000000;
+    border
+    
+.card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.card {
+    width: 18rem;
+    margin-bottom: 20px;
+    border: 1px solid #000000;
+    /* Add border style */
+    border-radius: 8px;
+    /* Optional: Add border radius for rounded corners */
+}
+
+.card-img-top {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    border-bottom: 1px solid #000000;
+}
+.card-img{
+    align-items: center;
+    justify-content: center;
+    
+}
+.image-limit-height {
+    max-height: 200px;
+    /* ajustez la hauteur maximale selon vos besoins */
+    width: auto;
+    /* permet à la largeur de s'ajuster automatiquement */
+}
+.card-footer {
+    background-color: #6b747c;
+    border-top: 1px solid #000000;
+    /* Add border style for footer */
+    border-radius: 0 0 8px 8px;
+    /* Optional: Add border radius for footer */
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
 
 /*mettre une bordure au tableau et au cellule*/
 
@@ -70,3 +152,4 @@ td {
     justify-content: center;
     margin-bottom: 2rem;
 }
+
