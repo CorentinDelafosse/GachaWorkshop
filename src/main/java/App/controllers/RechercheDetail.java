@@ -1,21 +1,21 @@
 package App.controllers;
 
-import org.bson.types.ObjectId;
+import org.bson.Document;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import App.BD.MongoDB;
 
 @Controller
 public class RechercheDetail {
 
     @GetMapping("/articleDetails/{articleId}")
     public String afficherDetailsArticle(@PathVariable String articleId, Model model) {
-        // Utilisez l'ID de l'article pour récupérer les détails de l'article depuis
-        // votre service ou repository
-        // Ajoutez l'article au modèle
-        model.addAttribute("article", articleService.getArticleById(articleId));
+        Document articleService = MongoDB.getArticleById(articleId);
+        model.addAttribute("article", articleService);
 
-        // Retournez le nom de la page HTML des détails de l'article
-        return "articleDetails";
+        return "RechercheDetail";
     }
 }
