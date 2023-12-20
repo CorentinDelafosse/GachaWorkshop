@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Détails de l'article</title>
     <link rel="stylesheet" href="style.css" />
     <link
@@ -10,21 +12,22 @@
   </head>
 
   <body>
-    <h1>Détails de l'article</h1>
+    <header>
+      <h1>Détails de l'article</h1>
+    </header>
 
-    <div>
+    <div class="article-details">
       <!-- Affichez les détails de l'article ici -->
-      <div>
+      <div class="article-image">
         <img
           th:src="'data:image/png;base64,' + ${article.image}"
-          class="image-limit-height"
           alt="Image de l'article"
         />
       </div>
-      <div>
+      <div class="article-info">
         <h2 th:text="${article.nom}"></h2>
-        <p th:text="${article.description}"></p>
-        <p th:text="'Prix: ' + ${article.prix}"></p>
+        <p class="description" th:text="${article.description}"></p>
+        <p class="price" th:text="'Prix: ' + ${article.prix}"></p>
       </div>
     </div>
   </body>
