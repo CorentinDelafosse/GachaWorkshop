@@ -31,7 +31,10 @@
     <div class="card-deck">
       <!-- Utilize Thymeleaf to iterate over the list of articles and display them as cards -->
       <div th:each="article : ${articles}" class="card">
-        <a th:href="@{'/articleDetails/' + ${article._id}}">
+        <a
+          class="Detailenvoie"
+          th:href="@{'/articleDetails/' + ${article._id}}"
+        >
           <div class="card-img">
             <img
               th:src="'data:image/png;base64,' + ${article.image}"

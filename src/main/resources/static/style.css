@@ -76,54 +76,27 @@ button[type="submit"]:hover {
 .card-footer {
     background-color: #6b747c;
     border-top: 1px solid #000000;
-    border
-    
-.card-deck {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 20px 0;
+}
+a:link {
+    color: #000;
+    /* Couleur du texte pour les liens non visités (changez la couleur selon vos préférences) */
+    text-decoration: none;
+    /* Supprime la décoration par défaut du lien (soulignement) */
 }
 
-.card {
-    width: 18rem;
-    margin-bottom: 20px;
-    border: 1px solid #000000;
-    /* Add border style */
-    border-radius: 8px;
-    /* Optional: Add border radius for rounded corners */
+/* Style du lien visité */
+a:visited {
+    color: #000;
+    /* Couleur du texte pour les liens visités (changez la couleur selon vos préférences) */
 }
 
-.card-img-top {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: cover;
-    border-bottom: 1px solid #000000;
-}
-.card-img{
-    align-items: center;
-    justify-content: center;
-    
-}
-.image-limit-height {
-    max-height: 200px;
-    /* ajustez la hauteur maximale selon vos besoins */
-    width: auto;
-    /* permet à la largeur de s'ajuster automatiquement */
-}
-.card-footer {
-    background-color: #6b747c;
-    border-top: 1px solid #000000;
-    /* Add border style for footer */
-    border-radius: 0 0 8px 8px;
-    /* Optional: Add border radius for footer */
+/* Style du lien au survol */
+a:hover {
+    color: #000;
+    /* Couleur du texte au survol du lien (changez la couleur selon vos préférences) */
 }
 
-.btn-danger {
-    color: #fff;
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
+
 
 /*mettre une bordure au tableau et au cellule*/
 
@@ -189,5 +162,4 @@ h2 {
 .price {
     color: #f00;
     font-weight: bold;
-}
 }
