@@ -8,7 +8,7 @@ import com.mongodb.client.MongoDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +24,7 @@ public class MongoDB {
     private static final String COLLECTION_NAME = "Articles";
 
     public static void addProduct(String nomProduit, String descriptionProduit, double prixProduit,
-            MultipartFile imagePath) {
+            MultipartFile image) {
         // Connectez-vous à la base de données MongoDB
         try (MongoClient mongoClient = MongoClients.create(URL)) {
             // Sélectionnez la base de données
@@ -34,7 +34,37 @@ public class MongoDB {
             MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
 
             // Convertissez l'image en base64
-            String imageBase64 = encodeImageToBase64(imagePath.getBytes());
+            String imageBase64 = encodeImageToBase64(image.getBytes());
+
+            // Insérez le document avec l'image
+            InsertOneResult result = collection.insertOne(new Document()
+                    .append("nom", nomProduit)
+                    .append("description", descriptionProduit)
+                    .append("prix", prixProduit)
+                    .append("image", imageBase64));
+
+            // Affichez le résultat de l'opération d'insertion
+            System.out.println("Résultat de l'opération d'insertion : " + result);
+
+            System.out.println("Produit ajouté avec succès.");
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
+        }
+    }
+
+    public static void addProductCSV(String nomProduit, String descriptionProduit, double prixProduit,
+            File image) {
+        // Connectez-vous à la base de données MongoDB
+        try (MongoClient mongoClient = MongoClients.create(URL)) {
+            // Sélectionnez la base de données
+            MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
+
+            // Sélectionnez la collection
+            MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
+
+            // Convertissez l'image en base64
+            byte[] imageBytes = Files.readAllBytes(image.toPath());
+            String imageBase64 = Base64.getEncoder().encodeToString(imageBytes);
 
             // Insérez le document avec l'image
             InsertOneResult result = collection.insertOne(new Document()
