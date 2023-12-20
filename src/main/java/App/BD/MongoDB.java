@@ -151,7 +151,8 @@ public class MongoDB {
     }
 
     public static Document getArticleById(String articleId) {
-        Document article = new Document();
+        Document Article = new Document();
+        System.err.println("Article ID : " + articleId);
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
             // Sélectionnez la base de données
             MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
@@ -162,13 +163,12 @@ public class MongoDB {
             // Créez le filtre pour récupérer l'article par ID
             Document query = new Document("_id", new ObjectId(articleId));
             // Utilisez la méthode findOne pour récupérer un seul document
-            article = collection.find(query).first();
+            Article = collection.find(query).first();
 
         } catch (Exception e) {
             System.err.println("Erreur lors de la récupération de l'article par ID : " + e.getMessage());
-            return null; // Gérer l'erreur selon vos besoins
         }
-        return article;
+        return Article;
     }
 
 }

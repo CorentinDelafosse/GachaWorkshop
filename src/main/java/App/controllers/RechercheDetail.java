@@ -14,7 +14,7 @@ public class RechercheDetail {
     @GetMapping("/articleDetails/{articleId}")
     public String afficherDetailsArticle(@PathVariable String articleId, Model model) {
         Document articleService = MongoDB.getArticleById(articleId);
-        model.addAttribute("article", articleService);
+        model.addAttribute("Article", articleService);
 
         return "RechercheDetail";
     }

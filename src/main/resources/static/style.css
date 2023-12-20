@@ -126,40 +126,4 @@ td {
     margin-bottom: 2rem;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
 
-.article-details {
-    max-width: 800px;
-    margin: 20px auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.article-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.article-info {
-    max-width: 400px;
-}
-
-h2 {
-    color: #333;
-}
-
-.description {
-    color: #555;
-}
-
-.price {
-    color: #f00;
-    font-weight: bold;
-}

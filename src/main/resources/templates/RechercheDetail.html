@@ -4,13 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Détails de l'article</title>
-    <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
     />
   </head>
-
   <body>
     <header>
       <h1>Détails de l'article</h1>
@@ -18,17 +16,60 @@
 
     <div class="article-details">
       <!-- Affichez les détails de l'article ici -->
-      <div class="article-image">
+      <div th:if="${Article != null}">
+        <!-- Access 'image' property only if 'article' is not null -->
         <img
-          th:src="'data:image/png;base64,' + ${article.image}"
-          alt="Image de l'article"
+          th:src="'data:image/png;base64,' + ${Article.image}"
+          alt="Article Image"
         />
       </div>
+
       <div class="article-info">
-        <h2 th:text="${article.nom}"></h2>
-        <p class="description" th:text="${article.description}"></p>
-        <p class="price" th:text="'Prix: ' + ${article.prix}"></p>
+        <h2 th:text="${Article.nom}"></h2>
+        <p class="description" th:text="${Article.description}"></p>
+        <p class="price" th:text="'Prix: ' + ${Article.prix}"></p>
       </div>
     </div>
   </body>
+  <style>
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .article-details {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .article-image img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .article-info {
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .description {
+      color: #555;
+    }
+
+    .price {
+      color: #e44d26;
+      /* Couleur orange (vous pouvez changer la couleur selon vos préférences) */
+      font-weight: bold;
+    }
+  </style>
 </html>
