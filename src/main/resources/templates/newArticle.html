@@ -6,14 +6,18 @@
     <title>Page d'accueil</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-
+  <header>
+    <div class="header">
+      <a href="/" class="logo">GatchaWorkShop</a>
+      <div class="header-right">
+        <a href="#home">Home</a>
+        <a href="/recherche">Rechercher un article</a>
+        <a class="active" href="/newArticle">Ajouter un article</a>
+      </div>
+    </div>
+  </header>
   <body>
     <h1>Ajout d'un article</h1>
-
-    <!-- redirection vers newArticle -->
-    <div class="redirect">
-      <a href="/recherche">Rechercher un article</a>
-    </div>
 
     <!-- Formulaire d'un nouvel article -->
     <form action="/newArticle" method="post" enctype="multipart/form-data">

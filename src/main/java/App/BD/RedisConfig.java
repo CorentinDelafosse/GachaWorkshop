@@ -9,8 +9,6 @@ public class RedisConfig {
 
     public static JedisPool initRedisConnectionPool() {
         JedisPoolConfig poolConfig = new JedisPoolConfig();
-        // Configurer le pool si nécessaire
-
         return new JedisPool(poolConfig, REDIS_HOST, REDIS_PORT);
     }
 }
