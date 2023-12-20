@@ -1,5 +1,6 @@
 package App.controllers;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,17 @@ public class RechercheController {
         List<Document> articles = MongoDB.getAllArticles(); // Assurez-vous d'implémenter cette méthode dans votre
                                                             // classe MongoDB
                                                             // Ajoutez la liste d'articles au modèle
-        System.out.println("Liste des articles : " + articles);
+        
+        //foreach articles pour changer prix en 2 décimal
+        for (Document article : articles) {
+            double prix = article.getDouble("prix");
+
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            String resultatFormate = decimalFormat.format(prix);
+
+            article.put("prix", resultatFormate);
+        }
+
         model.addAttribute("articles", articles);
         return "recherche";
     }
@@ -31,10 +42,6 @@ public class RechercheController {
     @PostMapping("/recherche")
     public String deleteArticle(@RequestParam("articleId") String articleId) {
         // Implémentez la logique de suppression de l'article
-
-        System.out.println("Article à supprimer : " + articleId);
-        // le meme print mais en ObjectId de mongoDB
-        System.out.println("Article à supprimer : " + new ObjectId(articleId));
         MongoDB.deleteArticle(articleId); // Assurez-vous d'implémenter cette méthode dans votre classe MongoDB
 
         // Redirigez vers la page de recherche d'articles après la suppression
@@ -47,6 +54,7 @@ public class RechercheController {
         List<String> result = RedisFunctions.getSearchResult(rechercheTerm);
         if (result != null && !result.isEmpty()) {
             List<Document> filteredArticles = new ArrayList<>();
+
             int length = result.size(); // Récupérez la taille de la liste
             // Parcourez les éléments par groupe de 4
             for (int i = 0; i < length; i += 5) {
