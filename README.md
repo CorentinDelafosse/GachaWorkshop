@@ -1,8 +1,5 @@
 # GachaWorkshop
 
-[![Build Status](https://travis-ci.org/votre-utilisateur/GachaWorkshop.svg?branch=main)](https://travis-ci.org/votre-utilisateur/GachaWorkshop)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
 ## Table des Matières
 
 - [Objectif](#objectif)
@@ -13,8 +10,7 @@
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Utilisation](#utilisation)
-- [Contributions](#contributions)
-- [Licence](#licence)
+
 
 ## Objectif
 
@@ -103,13 +99,3 @@ Avant de lancer l'application Java, assurez-vous d'avoir Redis démarré sur vot
 3. Accédez au site via votre navigateur à l'adresse : `http://localhost:8080`.
 
    Assurez-vous que le port 8080 n'est pas déjà utilisé sur votre machine.
-
-
-
-## Contributions
-
-Les contributions sous forme de suggestions, rapports de bogues et pull requests sont les bienvenues.
-
-## Licence
-
-Ce projet est sous licence [MIT](LICENSE).
